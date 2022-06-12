@@ -36,6 +36,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Product getById(Long id){
+        return productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
+    }
+
+    @Override
     public List<Product> getAllByShopId(Long shopId){
         return productRepository.findByShopId(shopId);
     }

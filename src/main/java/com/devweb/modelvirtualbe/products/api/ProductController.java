@@ -6,9 +6,7 @@ import com.devweb.modelvirtualbe.products.resource.ProductResource;
 import com.devweb.modelvirtualbe.products.resource.ShopResource;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -28,5 +26,10 @@ public class ProductController {
     @GetMapping
     public List<ProductResource> getAllProduct() {
         return mapper.ListToResource(productService.getAll());
+    }
+
+    @GetMapping("{productId}")
+    public ProductResource getProductById(@PathVariable Long productId){
+        return mapper.toResource(productService.getById(productId));
     }
 }
