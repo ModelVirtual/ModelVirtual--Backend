@@ -5,8 +5,7 @@ import com.devweb.modelvirtualbe.products.mapping.ProductMapper;
 import com.devweb.modelvirtualbe.products.resource.ProductResource;
 import com.devweb.modelvirtualbe.products.resource.ShopResource;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
