@@ -17,15 +17,19 @@ public class ShopMapper implements Serializable {
     public ShopResource toResource(Shop model) {
         return mapper.map(model, ShopResource.class);
     }
+
     public List<ShopResource> toResourceList(List<Shop> modelList) {
         return mapper.mapList(modelList, ShopResource.class);
     }
+
     public Shop toModel(ShopResource resource) {
         return mapper.map(resource, Shop.class);
     }
+
     public Shop toModel(CreateShopResource resource) {
         return mapper.map(resource, Shop.class);
     }
+
     public Shop toModel(UpdateShopResource resource) {
         return mapper.map(resource, Shop.class);
     }

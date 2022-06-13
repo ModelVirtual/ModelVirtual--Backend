@@ -16,12 +16,10 @@ import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
     private static final String ENTITY="Product";
-
     private final ProductRepository productRepository;
-
     private final ShopRepository shopRepository;
-
     private final Validator validator;
 
     public ProductServiceImpl(ProductRepository productRepository,ShopRepository shopRepository,Validator validator){
@@ -64,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
             throw new ResourceValidationException(ENTITY, violations);
         if(!shopRepository.existsById(shopId))
             throw new ResourceNotFoundException("Shop",shopId);
-
         return productRepository.findById(productId).map(existingProduct->
                 productRepository.save(existingProduct.withName(request.getName()).withImage(request.getImage()).withPrice(request.getPrice())))
                 .orElseThrow(() -> new ResourceNotFoundException("Shop", shopId));
@@ -77,6 +74,4 @@ public class ProductServiceImpl implements ProductService {
             return ResponseEntity.ok().build();
         }).orElseThrow(()->new ResourceNotFoundException(ENTITY,productId));
     }
-
-
 }

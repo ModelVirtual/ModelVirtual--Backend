@@ -16,6 +16,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/v1/users")
 public class UserController {
+
     private final UserService userService;
     private final UserMapper mapper;
 
@@ -23,14 +24,17 @@ public class UserController {
         this.userService = userService;
         this.mapper = mapper;
     }
+
     @GetMapping
     public List<User> getAllUsers(){
         return userService.getAll();
     }
+
     @GetMapping("{userId}")
     public UserResource getUserId(@PathVariable Long userId){
         return mapper.toResource(userService.getById(userId));
     }
+
     @PostMapping
     public UserResource createUser(@RequestBody CreateUserResource resource){
         return mapper.toResource(userService.create(mapper.toModel(resource)));

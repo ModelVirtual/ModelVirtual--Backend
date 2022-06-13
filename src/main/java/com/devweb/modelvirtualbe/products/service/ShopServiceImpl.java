@@ -17,6 +17,7 @@ import java.util.Set;
 
 @Service
 public class ShopServiceImpl implements ShopService {
+
     private static final String ENTITY = "Shop";
     private final ShopRepository shopRepository;
     private final Validator validator;
@@ -41,17 +42,13 @@ public class ShopServiceImpl implements ShopService {
         Set<ConstraintViolation<Shop>> violations = validator.validate(shop);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-
         Shop shopWithLogoUrl = shopRepository.findByLogoUrl(shop.getLogoUrl());
         if (shopWithLogoUrl != null)
             throw new ResourceValidationException(ENTITY, "A shop with the same logo already exists. Change logo's url and try again.");
-
         Shop shopWithName = shopRepository.findByName(shop.getName());
         if (shopWithName != null)
             throw new ResourceValidationException(ENTITY, "A shop with the same name already exists. Change shop name and try again.");
-
         return shopRepository.save(shop);
-
     }
 
     @Override
@@ -59,16 +56,12 @@ public class ShopServiceImpl implements ShopService {
         Set<ConstraintViolation<Shop>> violations = validator.validate(shop);
         if(!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
-
         Shop shopWithLogoUrl = shopRepository.findByLogoUrlAndIdNot(shop.getLogoUrl(), id);
         if (shopWithLogoUrl != null)
             throw new ResourceValidationException(ENTITY, "A shop with the same logo already exists. Change logo's url and try again.");
-
-
         Shop shopWithName = shopRepository.findByNameAndIdNot(shop.getName(), id);
         if (shopWithName != null)
             throw new ResourceValidationException(ENTITY, "A shop with the same name already exists. Change shop name and try again.");
-
         return shopRepository.findById(id).map(s ->
                 shopRepository.save(
                         s.withName(shop.getName())

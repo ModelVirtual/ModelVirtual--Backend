@@ -18,6 +18,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/v1/shops")
 public class ShopsController {
+
     @Autowired
     ShopService shopService;
     @Autowired
@@ -27,18 +28,22 @@ public class ShopsController {
     public List<ShopResource> getAllShops() {
         return mapper.toResourceList(shopService.getAll());
     }
+
     @GetMapping("{shopId}")
     public ShopResource getShopById(@PathVariable("shopId") Long id) {
         return mapper.toResource(shopService.getById(id));
     }
+
     @PostMapping
     public ShopResource createShop(@RequestBody CreateShopResource request) {
         return mapper.toResource(shopService.create(mapper.toModel(request)));
     }
+
     @PutMapping("{shopId}")
     public ShopResource updateShop(@PathVariable Long shopId, @RequestBody UpdateShopResource request) {
         return mapper.toResource(shopService.update(shopId, mapper.toModel(request)));
     }
+
     @DeleteMapping("{shopId}")
     public ResponseEntity<?> deleteShop(@PathVariable Long shopId) {
         return shopService.delete(shopId);

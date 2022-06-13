@@ -18,10 +18,7 @@ public class UpdateProductResource {
     @NotBlank
     @Size(max = 100)
     private String name;
-
     private Float price;
-
     private String image;
-
     //private ShopResource shop;
 }

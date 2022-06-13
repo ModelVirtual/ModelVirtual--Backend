@@ -16,6 +16,7 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/api/v1/shops/{shopId}/product")
 public class ShopProductController {
+
     private final ProductService productService;
     private final ProductMapper mapper;
 

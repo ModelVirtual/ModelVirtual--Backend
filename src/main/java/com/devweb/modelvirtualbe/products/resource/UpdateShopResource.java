@@ -18,6 +18,5 @@ public class UpdateShopResource {
     @NotBlank
     @Size(max = 30)
     private String name;
-
     private String logoUrl;
 }

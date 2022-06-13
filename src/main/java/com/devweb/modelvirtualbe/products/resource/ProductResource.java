@@ -9,15 +9,9 @@ import lombok.*;
 @AllArgsConstructor
 
 public class ProductResource {
-
     private Long id;
-
     private String name;
-
     private Float price;
-
     private String image;
-
     private ShopResource shop;
-
 }

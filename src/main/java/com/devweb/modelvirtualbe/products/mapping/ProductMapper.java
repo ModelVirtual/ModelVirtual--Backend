@@ -27,8 +27,4 @@ public class ProductMapper {
     public Product toModel(UpdateProductResource resource){
         return mapper.map(resource,Product.class);
     }
-
-
-
-
 }

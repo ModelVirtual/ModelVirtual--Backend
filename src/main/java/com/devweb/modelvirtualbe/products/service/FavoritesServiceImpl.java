@@ -15,6 +15,7 @@ import java.util.Set;
 
 @Service
 public class FavoritesServiceImpl implements FavoriteService {
+
     private static final String ENTITY = "Favorite";
     private final FavoriteRepository favoriteRepository;
     private final Validator validator;
@@ -28,10 +29,12 @@ public class FavoritesServiceImpl implements FavoriteService {
     public List<Favorite> getAll() {
         return favoriteRepository.findAll();
     }
+
     @Override
     public Favorite getById(Long id) {
         return favoriteRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(ENTITY, id));
     }
+
     @Override
     public List<Favorite> getFavoriteByUserId(Long userId) {
         return favoriteRepository.findAllByIdUser(userId);
@@ -65,6 +68,5 @@ public class FavoritesServiceImpl implements FavoriteService {
             favoriteRepository.delete(student);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
-
     }
 }

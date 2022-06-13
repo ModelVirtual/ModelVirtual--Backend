@@ -15,6 +15,7 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     private static final String ENTITY = "User";
     private final UserRepository userRepository;
     private final Validator validator;

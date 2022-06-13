@@ -16,12 +16,15 @@ public class FavoriteMapper implements Serializable {
     public FavoriteResource toResource(Favorite model){
         return mapper.map(model, FavoriteResource.class);
     }
+
     public Favorite toModel(FavoriteResource resource) {
         return mapper.map(resource, Favorite.class);
     }
+
     public Favorite toModel(CreateFavoriteResource resource) {
         return mapper.map(resource, Favorite.class);
     }
+
     public Favorite toModel(UpdateFavoriteResource resource) {
         return mapper.map(resource, Favorite.class);
     }

@@ -16,6 +16,5 @@ public class CreateShopResource {
     @NotBlank
     @Size(max = 30)
     private String name;
-
     private String logoUrl;
 }
