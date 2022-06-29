@@ -1,8 +1,8 @@
 package com.devweb.modelvirtualbe.security.mapping;
 
 import com.devweb.modelvirtualbe.security.domain.model.entity.Role;
-import com.devweb.modelvirtualbe.security.domain.model.entity.User;
-import com.devweb.modelvirtualbe.security.resource.UserResource;
+import com.devweb.modelvirtualbe.security.domain.model.enumeration.Roles;
+import com.devweb.modelvirtualbe.security.resource.RoleResource;
 import com.devweb.modelvirtualbe.shared.mapping.EnhancedModelMapper;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
@@ -14,30 +14,30 @@ import org.springframework.data.domain.Pageable;
 import java.io.Serializable;
 import java.util.List;
 
-public class UserMapper implements Serializable {
+public class RoleMapper implements Serializable {
 
     @Autowired
     EnhancedModelMapper mapper;
 
-    Converter<Role, String> roleToString = new AbstractConverter<>() {
+    Converter<Roles, String> roleToString = new AbstractConverter<>() {
         @Override
-        protected String convert(Role role) {
-            return role == null ? null : role.getName().name();
+        protected String convert(Roles role) {
+            return role == null ? null : role.name();
         }
     };
 
     // Object Mapping
-    public UserResource toResource(User model) {
+    public RoleResource toResource(Role model) {
 
         mapper.addConverter(roleToString);
-        return mapper.map(model, UserResource.class);
+        return mapper.map(model, RoleResource.class);
 
     }
 
-    public Page<UserResource> modelListToPage(List<User> modelList, Pageable pageable) {
+    public Page<RoleResource> modelListToPage(List<Role> modelList, Pageable pageable) {
 
         mapper.addConverter(roleToString);
-        return new PageImpl<>(mapper.mapList(modelList, UserResource.class), pageable, modelList.size());
+        return new PageImpl<>(mapper.mapList(modelList, RoleResource.class), pageable, modelList.size());
     }
 
 
