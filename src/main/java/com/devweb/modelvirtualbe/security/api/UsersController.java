@@ -4,6 +4,7 @@ import com.devweb.modelvirtualbe.security.domain.service.UserService;
 import com.devweb.modelvirtualbe.security.domain.service.communication.AuthenticateRequest;
 import com.devweb.modelvirtualbe.security.domain.service.communication.RegisterRequest;
 import com.devweb.modelvirtualbe.security.mapping.UserMapper;
+import com.devweb.modelvirtualbe.security.resource.UpdateUserResource;
 import com.devweb.modelvirtualbe.security.resource.UserResource;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -46,6 +47,16 @@ public class UsersController {
     public ResponseEntity<?> getAllUsers(Pageable pageable) {
         Page<UserResource> resources = mapper.modelListToPage(userService.getAll(), pageable);
         return ResponseEntity.ok(resources);
+    }
+
+    @GetMapping("{userId}")
+    public UserResource getUserById(@PathVariable Long userId){
+        return mapper.toResource(userService.getById(userId));
+    }
+
+    @PutMapping("{userId}")
+    public UserResource updateUser(@PathVariable Long userId, @RequestBody UpdateUserResource resource) {
+        return mapper.toResource(userService.update(userId, mapper.toModel(resource)));
     }
 
 

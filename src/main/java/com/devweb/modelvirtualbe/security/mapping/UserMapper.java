@@ -2,6 +2,7 @@ package com.devweb.modelvirtualbe.security.mapping;
 
 import com.devweb.modelvirtualbe.security.domain.model.entity.Role;
 import com.devweb.modelvirtualbe.security.domain.model.entity.User;
+import com.devweb.modelvirtualbe.security.resource.UpdateUserResource;
 import com.devweb.modelvirtualbe.security.resource.UserResource;
 import com.devweb.modelvirtualbe.shared.mapping.EnhancedModelMapper;
 import org.modelmapper.AbstractConverter;
@@ -38,6 +39,10 @@ public class UserMapper implements Serializable {
 
         mapper.addConverter(roleToString);
         return new PageImpl<>(mapper.mapList(modelList, UserResource.class), pageable, modelList.size());
+    }
+
+    public User toModel(UpdateUserResource resource) {
+        return mapper.map(resource, User.class);
     }
 
 

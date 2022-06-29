@@ -14,6 +14,8 @@ import com.devweb.modelvirtualbe.security.middleware.JwtHandler;
 import com.devweb.modelvirtualbe.security.middleware.UserDetailsImpl;
 import com.devweb.modelvirtualbe.security.resource.AuthenticateResource;
 import com.devweb.modelvirtualbe.security.resource.UserResource;
+import com.devweb.modelvirtualbe.shared.exception.ResourceNotFoundException;
+import com.devweb.modelvirtualbe.shared.exception.ResourceValidationException;
 import com.devweb.modelvirtualbe.shared.mapping.EnhancedModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,8 +31,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -38,6 +43,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final String ENTITY = "User";
+    private final Validator validator;
 
     @Autowired
     UserRepository userRepository;
@@ -56,6 +63,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     EnhancedModelMapper mapper;
+
+    public UserServiceImpl(Validator validator) {
+        this.validator = validator;
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -151,6 +163,35 @@ public class UserServiceImpl implements UserService {
 
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User getById(Long userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, userId));
+    }
+
+    @Override
+    public User update(Long userId, User user) {
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+
+        if(!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        Optional<User> userWithUsername = userRepository.findByUsername(user.getUsername());
+
+        if(userWithUsername.isPresent() && !userWithUsername.get().getId().equals(userId))
+            throw new ResourceValidationException(ENTITY, "An user with the same email already exists.");
+
+        return userRepository.findById(userId).map(existingUser ->
+                        userRepository.save(
+                                existingUser
+                                        .withUsername(user.getUsername())
+                                        .withLastName(user.getLastName())
+                                        .withFirstName(user.getFirstName())
+                                        .withYear(user.getYear())
+                                        .withProfileImage(user.getProfileImage())))
+                .orElseThrow(() -> new ResourceNotFoundException(ENTITY, userId));
     }
 
 }
