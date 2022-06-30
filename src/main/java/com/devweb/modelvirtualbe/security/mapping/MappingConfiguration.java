@@ -14,4 +14,9 @@ public class MappingConfiguration {
     public RoleMapper roleMapper() {
         return new RoleMapper();
     }
+
+    @Bean
+    public CommentMapper commentMapper() {
+        return new CommentMapper();
+    }
 }
