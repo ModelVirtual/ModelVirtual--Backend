@@ -63,7 +63,10 @@ public class ProductServiceImpl implements ProductService {
         if(!shopRepository.existsById(shopId))
             throw new ResourceNotFoundException("Shop",shopId);
         return productRepository.findById(productId).map(existingProduct->
-                productRepository.save(existingProduct.withName(request.getName()).withImage(request.getImage()).withPrice(request.getPrice())))
+                productRepository.save(existingProduct
+                        .withName(request.getName())
+                        .withImage(request.getImage())
+                        .withPrice(request.getPrice())))
                 .orElseThrow(() -> new ResourceNotFoundException("Shop", shopId));
     }
 

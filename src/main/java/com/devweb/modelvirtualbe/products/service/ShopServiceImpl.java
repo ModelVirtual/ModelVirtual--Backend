@@ -64,7 +64,8 @@ public class ShopServiceImpl implements ShopService {
             throw new ResourceValidationException(ENTITY, "A shop with the same name already exists. Change shop name and try again.");
         return shopRepository.findById(id).map(s ->
                 shopRepository.save(
-                        s.withName(shop.getName())
+                        s
+                                .withName(shop.getName())
                                 .withLogoUrl(shop.getLogoUrl())
                 )).orElseThrow(() -> new ResourceNotFoundException(ENTITY, id));
     }
