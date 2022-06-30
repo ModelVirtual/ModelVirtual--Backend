@@ -28,10 +28,8 @@ public class User extends AuditModel {
     @Column(unique = true)
     private String username;
 
-
     @Size(max = 120)
     private String password;
-
 
     @NotBlank
     @NotNull

@@ -32,6 +32,7 @@ public class UsersController {
         this.mapper = mapper;
     }
 
+
     @PostMapping("/auth/sign-in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticateRequest request) {
         return userService.authenticate(request);
@@ -42,21 +43,26 @@ public class UsersController {
         return userService.register(request);
     }
 
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAllUsers(Pageable pageable) {
-        Page<UserResource> resources = mapper.modelListToPage(userService.getAll(), pageable);
-        return ResponseEntity.ok(resources);
-    }
+
+
 
     @GetMapping("{userId}")
+    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public UserResource getUserById(@PathVariable Long userId){
         return mapper.toResource(userService.getById(userId));
     }
 
     @PutMapping("{userId}")
+    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
     public UserResource updateUser(@PathVariable Long userId, @RequestBody UpdateUserResource resource) {
         return mapper.toResource(userService.update(userId, mapper.toModel(resource)));
+    }
+
+    @GetMapping
+    @PreAuthorize("hasRole('ADMIN')or hasRole('USER')")
+    public ResponseEntity<?> getAllUsers(Pageable pageable) {
+        Page<UserResource> resources = mapper.modelListToPage(userService.getAll(), pageable);
+        return ResponseEntity.ok(resources);
     }
 
 
