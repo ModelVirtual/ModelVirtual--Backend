@@ -4,11 +4,14 @@ import com.devweb.modelvirtualbe.security.domain.service.CommentService;
 import com.devweb.modelvirtualbe.security.mapping.CommentMapper;
 import com.devweb.modelvirtualbe.security.resource.CommentResource;
 import com.devweb.modelvirtualbe.security.resource.CreateCommentResource;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SecurityRequirement(name="acme")
 @Tag(name="Comment")
 @CrossOrigin
 @RestController
