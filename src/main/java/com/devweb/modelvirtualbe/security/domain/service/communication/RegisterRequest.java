@@ -1,26 +1,28 @@
-package com.devweb.modelvirtualbe.security.resource;
+package com.devweb.modelvirtualbe.security.domain.service.communication;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-@With
-@NoArgsConstructor
-@AllArgsConstructor
-public class UpdateUserResource {
-
-    private Long id;
+public class RegisterRequest {
+    @NotNull
     @NotBlank
-    @Size(max = 50)
     private String username;
+
+    @NotNull
+    @NotBlank
+    private String password;
+
     @NotBlank
     @NotNull
     private String firstName;
+
     @NotBlank
     @NotNull
     private String lastName;
@@ -29,5 +31,6 @@ public class UpdateUserResource {
 
     private String profileImage;
 
-    //private List<RoleResource> roles;
+    private Set<String> roles;
+
 }

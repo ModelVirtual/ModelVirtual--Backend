@@ -1,17 +1,20 @@
 package com.devweb.modelvirtualbe.security.resource;
 
 import lombok.*;
+
+import java.util.List;
+
 @Getter
 @Setter
-@With
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@With
 public class UserResource {
     private Long id;
-    private String email;
-    private String password;
+    private String username;
     private String firstName;
     private String lastName;
     private int Year;
     private String profileImage;
+    private List<RoleResource> roles;
 }
